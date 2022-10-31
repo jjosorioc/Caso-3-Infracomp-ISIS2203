@@ -122,9 +122,9 @@ public class Cliente {
         // System.err.println("La consulta no es un número");
         // System.exit(-1);
         // }
+        int consulta = 10; // TODO: Consulta
 
-
-        byte[] consultaBytes = str2byte(10 + "");
+        byte[] consultaBytes = str2byte(consulta + "");
 
         // Encrypts the message C(K_AB1, <consulta>)
         byte[] encryptedConsulta = f.senc(consultaBytes, K_AB1, iv1Sepc, "Hola");
@@ -166,9 +166,9 @@ public class Cliente {
         // SecretKey K_AB1_2_SecretKey = f.csk1(K_AB1_2);
         byte[] descifrado = f.sdec(encryptedRespuestaBytes, K_AB1, iv2Spec);
         System.out.println("Respuesta del servidor: " + byte2str(descifrado));
-        //TODO: Ver por qué verificar retorna false
+        // TODO: Ver por qué verificar retorna false
         boolean verificar = f.checkInt(descifrado, K_AB2, hmacRespuestaBytes);
-        if (verificar) {
+        if (verificar && Integer.parseInt(byte2str(descifrado)) == consulta + 1) {
             writer.println("OK");
             System.out.println("La respuesta es correcta");
         } else {
