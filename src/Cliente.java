@@ -12,7 +12,7 @@ import javax.crypto.spec.IvParameterSpec;
 
 public class Cliente {
     public static final int SOCKET = 4030;
-    public static final String SERVER = "192.168.1.134";
+    public static final String SERVER = "localhost";
 
 
 
