@@ -3,6 +3,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.net.Socket;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -139,10 +141,11 @@ public class ClienteThread extends Thread {
             byte[] iv1 = generateIvBytes();
             IvParameterSpec iv1Sepc = new IvParameterSpec(iv1);
 
+            Random random = new Random();
+            int consulta = random.nextInt();
 
-            int consulta = 10; // TODO: Consulta sea un random
+            byte[] consultaBytes = (consulta + "").getBytes(Charset.forName("UTF-8"));
 
-            byte[] consultaBytes = str2byte(consulta + "");
 
 
             // Encrypts the message C(K_AB1, <consulta>)
@@ -190,7 +193,8 @@ public class ClienteThread extends Thread {
 
 
             boolean verificar = f.checkInt(descifrado, K_AB2, hmacRespuestaBytes);
-            if (verificar && Integer.parseInt(byte2str(descifrado)) == consulta + 1) {
+            if (verificar && Integer
+                    .parseInt(new String(descifrado, StandardCharsets.UTF_8)) == consulta + 1) {
                 writer.println("OK");
                 System.out.println("Client " + this.id + " --- La respuesta es correcta");
             } else {

@@ -88,8 +88,6 @@ public class SrvThread extends Thread {
 				System.out.println(dlg + "Finishing test: passed.");
 			else
 				System.out.println(dlg + "Finishing test: failed.");
-
-			ac.flush(); // TODO: Ver si es mejor eliminar el flush
 			sc.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,11 +173,11 @@ public class SrvThread extends Thread {
 				System.out.println(
 						"==========> Test 1b: passed (Client sends matching query and MAC).");
 
-				String str_original = byte2str(descifrado); // TODO: new String(descifrado, StandardCharsets.UTF_8);
+				String str_original = new String(descifrado, StandardCharsets.UTF_8);
 				int valor = Integer.parseInt(str_original) + 1;
 				System.out.println(dlg + "Query answer:" + valor);
 				String str_valor = Integer.toString(valor);
-				byte[] byte_valor = str2byte(str_valor); // TODO: str_valor.getBytes();
+				byte[] byte_valor = str_valor.getBytes();
 				//
 				// ERROR: -> generating MAC with a wrong key
 				//
@@ -271,12 +269,11 @@ public class SrvThread extends Thread {
 				System.out.println(
 						"==========> Test 2b: passed (Client sends matching query and MAC).");
 
-				String str_original = byte2str(descifrado); // TODO: new String(descifrado,
-															// StandardCharsets.UTF_8);
+				String str_original = new String(descifrado, StandardCharsets.UTF_8);
 				int valor = Integer.parseInt(str_original) + 1;
 				System.out.println(dlg + "Query answer:" + valor);
 				String str_valor = Integer.toString(valor);
-				byte[] byte_valor = str2byte(str_valor); // TODO: str_valor.getBytes();
+				byte[] byte_valor = str_valor.getBytes();
 
 				byte[] iv2 = generateIvBytes();
 				String str_iv2 = byte2str(iv2);
