@@ -161,10 +161,10 @@ public class ClienteThread extends Thread {
              */
             String respuesta = reader.readLine();
             if (respuesta == null || respuesta.equals("ERROR")) {
-                writer.flush();
+
                 System.err.println(
                         "Error en la consulta 9 de C(K_AB1<consulta>) y HMAC(K_AB2,<consulta>)");
-                System.exit(-1);
+                return;
             }
 
 
