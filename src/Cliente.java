@@ -122,7 +122,7 @@ public class Cliente {
         // System.err.println("La consulta no es un número");
         // System.exit(-1);
         // }
-        int consulta = 10; // TODO: Consulta
+        int consulta = 99; // TODO: Consulta
 
         byte[] consultaBytes = str2byte(consulta + "");
 
