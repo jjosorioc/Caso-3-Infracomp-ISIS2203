@@ -25,8 +25,6 @@ public class ClienteThread extends Thread {
 
     private BufferedReader reader;
 
-    private Socket socket;
-
 
 
     /**
@@ -94,7 +92,7 @@ public class ClienteThread extends Thread {
 
             // Calculates the value of X, which is a random number between 1 and p-1
             byte[] authenticationAsBytes = str2byte(authentication);
-            PublicKey publicKey = f.read_kplus("datos_asim_srv.pub", "Client " + this.id);
+            PublicKey publicKey = f.read_kplus("datos_asim_srv.pub", "Client " + this.id + " ");
             String message = g.toString() + "," + p.toString() + "," + g2x.toString();
 
 
@@ -105,6 +103,9 @@ public class ClienteThread extends Thread {
                 writer.println("OK");
             } else {
                 writer.println("ERROR");
+                System.out
+                        .println("Client " + this.id + " --- ERROR in the authentication (Step 5)");
+                return;
             }
 
 
@@ -162,15 +163,15 @@ public class ClienteThread extends Thread {
             String respuesta = reader.readLine();
             if (respuesta == null || respuesta.equals("ERROR")) {
 
-                System.err.println(
-                        "Error en la consulta 9 de C(K_AB1<consulta>) y HMAC(K_AB2,<consulta>)");
+                System.err.println("Client " + this.id
+                        + " --- Error en la consulta 9 de C(K_AB1<consulta>) y HMAC(K_AB2,<consulta>)");
                 return;
             }
 
 
 
             /**
-             * 11) Recieve the encrypted message C(K_AB1, <respuesta>)
+             * 11) Receive the encrypted message C(K_AB1, <respuesta>)
              */
             String encryptedRespuesta = reader.readLine();
             byte[] encryptedRespuestaBytes = str2byte(encryptedRespuesta);
@@ -191,13 +192,13 @@ public class ClienteThread extends Thread {
             boolean verificar = f.checkInt(descifrado, K_AB2, hmacRespuestaBytes);
             if (verificar && Integer.parseInt(byte2str(descifrado)) == consulta + 1) {
                 writer.println("OK");
-                System.out.println("--- Client " + this.id + " --- La respuesta es correcta");
+                System.out.println("Client " + this.id + " --- La respuesta es correcta");
             } else {
                 writer.println("ERROR");
-                System.out.println("--- Client " + this.id + " --- La respuesta es incorrecta");
+                System.out.println("Client " + this.id + " --- La respuesta es incorrecta");
             }
             reader.close();
-            // TODO: writer.flush();
+
             writer.close();
 
 
